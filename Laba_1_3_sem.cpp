@@ -2,9 +2,18 @@
 #include <string>
 #include <ctype.h>
 #include <math.h>
-#include <fstream>
 
 using namespace std;
+
+string second_part(string num);
+string second_part_to_base(long double num, int base);
+string convert_to_base(string num, int base);
+long double convert_second_part_to_decimal(string num, int base);
+long double convert_to_decimal(string num, int base);
+string base_sum(string num1, string num2, int base);
+string base_multiplication(string num1, string num2, int base);
+string base_sub(string num1, string num2, int base);
+void menu();
 
 string second_part(string num) {
 	string result = "0";
@@ -110,59 +119,69 @@ string base_multiplication(string num1, string num2, int base) {
 	return convert_to_base(to_string(sum_result), base);
 }
 
-int main() {
+string base_sub(string num1, string num2, int base) {
+	long double number1 = convert_to_decimal(num1, base);
+	long double number2 = convert_to_decimal(num2, base);
+	long double sub_result = number1 - number2;
+	return (sub_result < 0) ? "-" + convert_to_base(to_string(abs(sub_result)), base) : convert_to_base(to_string(sub_result), base);
+}
+
+void menu() {
 	int checkbox;
-	string num;
-	string num2;
+	string num, num2;
 	int base;
+
 	cout << "What do you want?" << endl;
-	cout << "1 - convert to base " << endl;
+	cout << "1 - convert to base" << endl;
 	cout << "2 - convert to decimal" << endl;
 	cout << "3 - base sum" << endl;
-	cout << "4 - base multiplication" << endl;
+	cout << "4 - base sub" << endl;
+	cout << "5 - base multiplication" << endl;
 	cout << "0 - leave" << endl;
-	cin >> checkbox;
-	while (checkbox != 0)
-	{
-		
+	do {
+
+		cin >> checkbox;
+
 		switch (checkbox) {
 		case 1: {
 			cout << "Enter the number: "; cin >> num;
 			cout << "Enter the base: "; cin >> base;
-			cout << "Answer: "<< convert_to_base(num, base) << endl;
-			cout << endl;
+			cout << "Answer: " << convert_to_base(num, base) << endl;
 			break;
-			}
+		}
 		case 2: {
 			cout << "Enter the number: "; cin >> num;
 			cout << "Enter the base: "; cin >> base;
 			cout << "Answer: " << convert_to_decimal(num, base) << endl;
-			cout << endl;
 			break;
 		}
 		case 3: {
-
 			cout << "Enter the first number: "; cin >> num;
 			cout << "Enter the second number: "; cin >> num2;
 			cout << "Enter the base: "; cin >> base;
-			cout << "Answer: " << base_sum(num,num2, base) << endl;
-			cout << endl;
+			cout << "Answer: " << base_sum(num, num2, base) << endl;
 			break;
 		}
 		case 4: {
-			
+			cout << "Enter the first number: "; cin >> num;
+			cout << "Enter the second number: "; cin >> num2;
+			cout << "Enter the base: "; cin >> base;
+			cout << "Answer: " << base_sub(num, num2, base) << endl;
+			break;
+		}
+		case 5: {
 			cout << "Enter the first number: "; cin >> num;
 			cout << "Enter the second number: "; cin >> num2;
 			cout << "Enter the base: "; cin >> base;
 			cout << "Answer: " << base_multiplication(num, num2, base) << endl;
-			cout << endl;
 			break;
 		}
-			  
-			
 		}
 		cout << "What next? Enter the number menu: "; cin >> checkbox;
-	}
-	cout << "Goodbye!";
+	} while (checkbox != 0);
+}
 
+int main() {
+	menu();
+	return 0;
 }
