@@ -40,12 +40,16 @@ string second_part_to_base(long double num, int base) {
 }
 
 string convert_to_base(string num, int base) {
-	bool flag = false;
+	bool flag = false, flag_minus = false;
 	string result;
 	long double second_part_num;
 	int first_num;
 	string result_base;
 	string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	if (num.find("-") < num.size()) {
+		flag_minus = true;
+		num.erase(0, 1);
+	}
 	if (num.find(".") < num.size()) {
 		flag = true;
 		second_part_num = stod(second_part(num));
@@ -57,9 +61,15 @@ string convert_to_base(string num, int base) {
 		first_num = first_num / base;
 	}
 	if (flag == true) {
+		if (flag_minus == true) {
+			return "-" + result + "." + result_base;
+		}
 		return result + "." + result_base;
 	}
 	else {
+		if (flag_minus == true) {
+			return "-" + result + result_base;
+		}
 		return result + result_base;
 	}
 }
@@ -81,11 +91,21 @@ long double convert_second_part_to_decimal(string num, int base) {
 }
 
 long double convert_to_decimal(string num, int base) {
+	bool flag_minus = false;
 	long double result = 0.0;
 	int j = 0;
 	string second_part_num;
 	double result_second_part = 0.0;
+	
+
+	if (num.find("-") < num.size()) {
+		
+		flag_minus = true;
+		num.erase(0, 1);
+	}
+
 	int start = num.size() - 1;
+
 	if (num.find(".") < num.size()) {
 		start = num.find(".") - 1;
 		second_part_num = second_part(num);
@@ -93,6 +113,7 @@ long double convert_to_decimal(string num, int base) {
 	}
 	for (int i = start; i >= 0; i--) {
 		int digit = num[j];
+
 		if (isdigit(digit)) {
 			result += (digit - '0') * pow(base, i);
 		}
@@ -103,6 +124,10 @@ long double convert_to_decimal(string num, int base) {
 		j++;
 	}
 	result += result_second_part;
+	if (flag_minus) {
+		result = -result;
+	}
+
 	return result;
 }
 
