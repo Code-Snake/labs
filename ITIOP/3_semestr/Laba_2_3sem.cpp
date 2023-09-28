@@ -79,11 +79,29 @@ string hex_to_binary(string hex) {
 	return binary;
 }
 
+string bin_to_hex(string bin_num, int type) {
+	string result;
+	string cuarto;
+	string dec_num,hex_num;
+	for (int i = 0; i < type*8; i+=4) {
+		cuarto = bin_num.substr(i, 4);
+		dec_num = to_string(convert_to_decimal(cuarto,2));
+		hex_num = convert_to_base(dec_num, 16);
+		if (hex_num == ".") {
+			result += "0";
+		}
+		else {
+			hex_num.erase(hex_num.find("."), 1);
+			result += hex_num;
+		}
+	}
+	return result;
+}
+
 string convert_to_base(string num, int base) {
 	bool flag = false, flag_minus = false;
 	string result;
 	long double second_part_num;
-	long int first_num;
 	string result_base;
 	string digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	if (num.find("-") < num.size()) {
@@ -96,12 +114,11 @@ string convert_to_base(string num, int base) {
 		result_base = second_part_to_base(second_part_num, base);
 	}
 	char* pEnd;
-	first_num = strtol(num.c_str(),&pEnd,10);
-	//cout << "first " << first_num << endl;
+	unsigned long long int first_num= strtoull(num.c_str(), &pEnd, 10);
+
 	while (first_num > 0) {
 		
 		result = digits[first_num % base] + result;
-		//cout <<result<<" "<< first_num % base << endl;
 		first_num = first_num / base;
 		
 	}
@@ -205,7 +222,7 @@ Number normalize_number(string num, int byte_types) {
 bytes_number decimal_to_byte_four(string num) {
 	string bin_num;
 	bytes_number result;
-	string  fourbyte, eightbyte, decimal_num, hex_num;
+	string  fourbyte, eightbyte;
 	string base_num = convert_to_base(to_string(abs(stod(num))), 2);
 	string normalize_num = normalize_number(num, 0).num;
 	string exponent = normalize_number(num, 0).exponent;
@@ -217,32 +234,10 @@ bytes_number decimal_to_byte_four(string num) {
 	else {
 		bin_num = "0" + offset + normalize_num.erase(0, 2);
 	}
-	while (bin_num.size() % 4 != 0) {
+	while (bin_num.size() != 32) {
 		bin_num += "0";
 	}
-	decimal_num = to_string(convert_to_decimal(bin_num, 2));
-	stringstream ss;
-	char* pEnd;
-	unsigned long long int long_decimal_num = strtoull(decimal_num.c_str(), &pEnd, 10);
-	ss << hex << long_decimal_num;
-	hex_num = ss.str();
-
-	transform(hex_num.begin(), hex_num.end(), hex_num.begin(), [](unsigned char c) { return toupper(c); });
-	if (hex_num.find(".") < hex_num.size()) {
-		hex_num.erase(hex_num.find("."), 1);
-	}
-
-	if (bin_num.size() < 32) {
-		while (bin_num.size() != 32) {
-			bin_num += "0";
-		}
-	}
-
-	while (hex_num.size() != 8) {
-		hex_num += "0";
-	}
-
-	result.hex_num = hex_num;
+	result.hex_num = bin_to_hex(bin_num, 4);
 	fourbyte = bin_num;
 	result.fourbyte = fourbyte;
 
@@ -251,48 +246,24 @@ bytes_number decimal_to_byte_four(string num) {
 bytes_number decimal_to_byte_eight(string num) {
 	string bin_num;
 	bytes_number result;
-	string  fourbyte,eightbyte, decimal_num, hex_num;
+	string  fourbyte,eightbyte, hex_num;
 	string base_num = convert_to_base(to_string(abs(stod(num))), 2);
 	string normalize_num = normalize_number(num, 1).num;
 	string exponent = normalize_number(num, 1).exponent;
-
+	
 	string offset = convert_to_base(to_string(stoi(exponent) + 1023), 2);
-
+	
 	if (num.find("-") < num.size()) {
 		bin_num = "1" + offset + normalize_num.erase(0, 2);
 	}
 	else {
 		bin_num = "0" + offset + normalize_num.erase(0, 2);
 	}
-	while (bin_num.size() % 4 != 0) {
+	while (bin_num.size() != 64) {
 		bin_num += "0";
 	}
 
-
-	decimal_num = to_string(convert_to_decimal(bin_num, 2));
-	stringstream ss;
-	char* pEnd;
-	unsigned long long int long_decimal_num = strtoull(decimal_num.c_str(), &pEnd, 10);
-	ss << hex << long_decimal_num;
-	hex_num = ss.str();
-
-
-	transform(hex_num.begin(), hex_num.end(), hex_num.begin(), [](unsigned char c) { return toupper(c); });
-	if (hex_num.find(".") < hex_num.size()) {
-		hex_num.erase(hex_num.find("."), 1);
-	}
-
-	if (bin_num.size() < 64) {
-		while (bin_num.size() != 64) {
-			bin_num += "0";
-		}
-	}
-
-	while (hex_num.size() != 16) {
-		hex_num += "0";
-	}
-
-	result.hex_num = hex_num;
+	result.hex_num = bin_to_hex(bin_num, 8);
 	eightbyte = bin_num;
 	result.eightbyte = eightbyte;
 
@@ -347,9 +318,9 @@ long double byte_to_decimal_four(string num) {
 	return result;
 }
 int main() {
-	string num1 = "-116.375";
-	string num2 = "379.938";
-	string num3 = "-276.438";
+	string num1 = "-116.375"; 
+	string num2 = "-193.789";
+	string num3 = "91.4844";
 	string num4 = "115.617";
 	cout << "|...............................TO 8 bytes......................................|" << endl;
 	bytes_number result = decimal_to_byte_eight(num1);
@@ -370,12 +341,12 @@ int main() {
 	result = decimal_to_byte_four(num4);
 	cout << result.hex_num << " " << result.fourbyte << endl;
 	cout << "|...............................FROM 4 bytes......................................|" << endl;
-	string hex_num1 = "C30BF000";
+	string hex_num1 = "C39E8800";
 	string hex_num2 = "43F37000";
 	cout << byte_to_decimal_four(hex_num1) << endl;
 	cout << byte_to_decimal_four(hex_num2) << endl;
 	cout << "|...............................FROM 8 bytes......................................|" << endl;
-	string hex_num3 = "C06F558000000000";
+	string hex_num3 = "405AC90000000000";
 	string hex_num4 = "4070B88000000000";
 
 	cout << byte_to_decimal(hex_num3) << endl;
