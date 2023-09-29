@@ -3,11 +3,10 @@
 #include <stdexcept>
 #include <algorithm>
 #include <iostream>
-#include <limits>
 
 using namespace std;
 
-double long dist(const Point& p1, const Point& p2) {
+double dist(const Point& p1, const Point& p2) {
     return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2));
 }
 
@@ -20,7 +19,7 @@ pair<Point, Point> closestPair(const std::vector<Point>& points) {
         throw invalid_argument("Not enough points");
     }
 
-    double long min_distance = std::numeric_limits<double long>::max();
+    double min_distance = 1.7e+308; // there may be errors with insufficient value
     // at the beginning!!!
     auto result = make_pair(Point(), Point());
     for (size_t i = 0; i < points.size(); ++i) {
@@ -72,27 +71,29 @@ pair<Point, Point> divideAndConquer(const vector<Point>& points) {
         return closestPair(points);
     }
 
-    vector<Point> sorted_points = points;
-    sort(sorted_points.begin(), sorted_points.end(),
+    std::vector<Point> sorted_points = points;
+    std::sort(sorted_points.begin(), sorted_points.end(),
         [](const Point& a, const Point& b) { return a.x < b.x; });
 
     size_t middle = points.size() / 2;
-    vector<Point> PLeft(sorted_points.begin(), sorted_points.begin() + middle);
-    vector<Point> PRight(sorted_points.begin() + middle, sorted_points.end());
+    std::vector<Point> PLeft(sorted_points.begin(),
+        sorted_points.begin() + middle);
+    std::vector<Point> PRight(sorted_points.begin() + middle,
+        sorted_points.end());
 
-    pair<Point, Point> pl = divideAndConquer(PLeft);
-    pair<Point, Point> pr = divideAndConquer(PRight);
+    std::pair<Point, Point> pl = closestPair(PLeft);
+    std::pair<Point, Point> pr = closestPair(PRight);
 
-    double d = min(dist(pl.first, pl.second), dist(pr.first, pr.second));
+    double d = std::min(dist(pl.first, pl.second), dist(pr.first, pr.second));
 
-    pair<Point, Point> pb = closestPairBetween(PLeft, PRight, d);
+    std::pair<Point, Point> pb = closestPairBetween(PLeft, PRight, d);
 
-    if (dist(pl.first, pl.second) < dist(pr.first, pr.second) &&
-        dist(pl.first, pl.second) < dist(pb.first, pb.second)) {
+    if (dist(pl.first, pl.second) <= dist(pr.first, pr.second) &&
+        dist(pl.first, pl.second) <= dist(pb.first, pb.second)) {
         return pl;
     }
-    else if (dist(pr.first, pr.second) < dist(pl.first, pl.second) &&
-        dist(pr.first, pr.second) < dist(pb.first, pb.second)) {
+    else if (dist(pr.first, pr.second) <= dist(pl.first, pl.second) &&
+        dist(pr.first, pr.second) <= dist(pb.first, pb.second)) {
         return pr;
     }
     else {
