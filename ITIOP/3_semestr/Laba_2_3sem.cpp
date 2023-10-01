@@ -265,13 +265,17 @@ bytes_number decimal_to_byte_eight(string num) {
 	
 	if (num.find("-") < num.size()) {
 		bin_num = "1" + offset + normalize_num.erase(0, 2);
+		if (num.find("0") == 1) {
+			bin_num = "0" + bin_num;
+		}
 	}
 	else {
 		bin_num = "0" + offset + normalize_num.erase(0, 2);
+		if (num.find("0") == 0) {
+			bin_num = "0" + bin_num;
+		}
 	}
-	if (num.find("0") == 0) {
-		bin_num = "0" + bin_num;
-	}
+
 	while (bin_num.size() != 64) {
 		bin_num += "0";
 	}
@@ -331,7 +335,7 @@ long double byte_to_decimal_four(string num) {
 	return result;
 }
 int main() {
-	string num1 = "0.05"; 
+	string num1 = "-0.05"; 
 	string num2 = "-193.789";
 	string num3 = "91.4844";
 	string num4 = "115.617";
