@@ -191,7 +191,6 @@ long double convert_to_decimal(string num, int base) {
 Number normalize_number(string num, int byte_types) {
 	Number result;
 	num = to_string(abs(stod(num)));
-	
 	if (num.find(".") < num.size()) {
 		string bin_num = convert_to_base(num, 2);
 		if (byte_types == 1) {
@@ -204,9 +203,18 @@ Number normalize_number(string num, int byte_types) {
 				bin_num.erase(25, (bin_num.size() - 25));
 			}
 		}
+		
+		if (num.find("0") == 0) {
+			string exponent = to_string(bin_num.find("1"));
+			bin_num.erase(1, bin_num.find("1")-1);
+			result.exponent = "-"+exponent;
+		}
+		else {
+			string exponent = to_string(bin_num.find(".") - 1);
+			result.exponent = exponent;
+		}
 		int dotpos = bin_num.find(".");
-		string exponent = to_string(bin_num.find(".") - 1);
-		result.exponent = exponent;
+	
 		bin_num.erase(dotpos, 1);
 		bin_num.insert(1, ".");
 		result.num = bin_num;
@@ -234,6 +242,9 @@ bytes_number decimal_to_byte_four(string num) {
 	else {
 		bin_num = "0" + offset + normalize_num.erase(0, 2);
 	}
+	if (num.find("0") == 0) {
+		bin_num = "0" + bin_num;
+	}
 	while (bin_num.size() != 32) {
 		bin_num += "0";
 	}
@@ -250,7 +261,6 @@ bytes_number decimal_to_byte_eight(string num) {
 	string base_num = convert_to_base(to_string(abs(stod(num))), 2);
 	string normalize_num = normalize_number(num, 1).num;
 	string exponent = normalize_number(num, 1).exponent;
-	
 	string offset = convert_to_base(to_string(stoi(exponent) + 1023), 2);
 	
 	if (num.find("-") < num.size()) {
@@ -258,6 +268,9 @@ bytes_number decimal_to_byte_eight(string num) {
 	}
 	else {
 		bin_num = "0" + offset + normalize_num.erase(0, 2);
+	}
+	if (num.find("0") == 0) {
+		bin_num = "0" + bin_num;
 	}
 	while (bin_num.size() != 64) {
 		bin_num += "0";
@@ -318,7 +331,7 @@ long double byte_to_decimal_four(string num) {
 	return result;
 }
 int main() {
-	string num1 = "-116.375"; 
+	string num1 = "0.05"; 
 	string num2 = "-193.789";
 	string num3 = "91.4844";
 	string num4 = "115.617";
