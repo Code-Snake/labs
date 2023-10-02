@@ -1,0 +1,53 @@
+MACROC ON VBA(REPLACE ALL VOWELS WITH @):
+Sub Replace()
+
+    Dim doc As Document
+    Set doc = ActiveDocument
+    
+    Dim rng As Range
+    Set rng = doc.Content
+    
+    Dim replacements As Variant
+    replacements = Array("å", "ó", "û", "à", "î", "ý", "ÿ", "è", "þ", "¸")
+    
+    Dim punctuation As Variant
+    punctuation = Array("@")
+    
+    Dim i As Long
+    
+    For i = 0 To UBound(replacements)
+        With rng.Find
+            .Text = replacements(i)
+            .Replacement.Text = punctuation(0)
+            .MatchWildcards = False
+            .Execute Replace:=wdReplaceAll
+        End With
+    Next i
+End Sub
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+MACROC ON VBA(DELETE SPACES BEFORE PUNCTUATION MARKS):
+Sub Deleta_spaces_before()
+    Dim doc As Document
+    Set doc = ActiveDocument
+    
+    Dim rng As Range
+    Set rng = doc.Content
+    
+    Dim replacements As Variant
+    replacements = Array(" .", " ,", " :", " ;", " !", " ?")
+    
+    Dim punctuation As Variant
+    punctuation = Array(".", ",", ":", ";", "!", "?")
+    
+    Dim i As Long
+    
+    For i = 0 To UBound(replacements)
+        With rng.Find
+            .Text = replacements(i)
+            .Replacement.Text = punctuation(i)
+            .MatchWildcards = False
+            .Execute Replace:=wdReplaceAll
+        End With
+    Next i
+End Sub
