@@ -1,0 +1,39 @@
+Sub Table()
+    Dim doc As Document
+    Set doc = ActiveDocument
+    Dim myTable As Word.Table
+    Dim tblName As String
+    Dim tblRows As Integer
+    Dim tblCols As Integer
+
+    ' Отображение пользовательской формы для ввода данных
+    
+    With doc
+        tblName = InputBox("Введите название таблицы:")
+        tblRows = InputBox("Введите количество строк:")
+        tblCols = InputBox("Введите количество столбцов:")
+        Dim myInt As Integer
+        
+         Dim Tables As Integer
+         Tables = doc.Tables.Count + 1
+         .Range.InsertAfter "Таблица " & Tables & " " & tblName & vbCr
+         myInt = .Range.Characters.Count - 1
+        .Range(0, myInt).Style = "Заголовок 1"
+         Set myTable = .Tables.Add(.Range(myInt, myInt), tblRows, tblCols)
+         
+         
+    End With
+
+    With myTable
+        
+        .Borders.OutsideLineStyle = wdLineStyleSingle
+        .Borders.InsideLineStyle = wdLineStyleSingle
+        Dim i As Integer
+        For i = 1 To .Rows.Count
+            .Cell(i, 1).Range.Text = i
+        Next i
+    End With
+    
+
+    MsgBox "Таблица " & tblName & " создана успешно!"
+End Sub
