@@ -8,7 +8,7 @@ Sub Replace()
     Set rng = doc.Content
     
     Dim replacements As Variant
-    replacements = Array("å", "ó", "û", "à", "î", "ý", "ÿ", "è", "þ", "¸")
+    replacements = Array("е", "у", "ы", "а", "о", "э", "я", "и", "ю", "ё")
     
     Dim punctuation As Variant
     punctuation = Array("@")
