@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой Портфолио</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#about">Обо мне</a></li>
+                <li><a href="#projects">Проекты</a></li>
+                <li><a href="#contact">Опыт работы</a></li>
+            </ul>
+        </nav>
+        <h1>Комарова Анастасия<br> &lt;/CodeSnake&gt;</h1>
+        
+        <!-- Карусель изображений -->
+        <div class="photo-carousel">
+            <img class="my_photo" src="https://sun9-46.userapi.com/impg/E80s5V3UcDcbyC1SGa_832Wgr-Q_UpOeMhwwRw/PUGe_Zi-xwA.jpg?size=1620x2160&quality=95&sign=5afe2dae7b253fbfb3acc0047b1b168b&type=album" alt="Моя фотография">
+            <button class="prev">❮</button>
+            <button class="next">❯</button>
+        </div>
+    
+        <p>Студентка 3 курса НГТУ НЭТИ. Начинающий программист-математик. Репетитор по олимпиадной математике</p>
+    </header>
+
+    <section id="about">
+        <h2>Обо мне</h2>
+        <p>Привет! Мой родной город - Омск. Я переехала в Новосибирск учиться на специалиста по искусственному интеллекту. 
+            Совмещаю в себе любовь к математике с любовью к творчеству. Поэтому закрыла все сессии на 5, окончила художественную школу и прочитала от корки до корки "Войну и мир".
+            При этом в свободное время люблю позависать в компьютерных играх (уважаю как шутеры, так и сюжетки), посмотреть сериальчик или же просто прогуляться по городу со стаканчиком кофе.
+        </p>
+    </section>
+    
+    <section id="projects">
+        <h2>Проекты</h2>
+        <div class="project">
+            <h3>Адаптивная модификация KalmanNet</h3>
+            <p>Научная работа, основанная на совмещении нейросетей и математического фильтра Калмана. По данному проекту пишется статья, 
+                предположительно опубликованная в конце 2024 года. <br> <b>Научный руководитель:</b> д.т.н. Чубич В.М.</p>
+        </div>
+        <div class="project">
+            <h3>Виртуальная лабораторная работа по физике "Адиабатический процесс в смесях газов"</h3>
+            <p>Работа, написанная преимущественно на react. Позволяет полностью изучить адиабатный процесс в смесях газов благодаря выверенным математически и физически формулам и
+                смоделированной установкой. 
+                <br><b>Ознакомиться с работой можно по ссылке:</b> <a href="https://code-snake.github.io">Перейти на работу</a>
+            </p>
+        </div>
+    </section>
+    
+
+    <section id="contact">
+        <h2>Опыт работы</h2>
+        <div class="project">
+            <h3>Стажировка Stax.ru</h3>
+            <p> Основное направление - backend на языке python. Изучение сокетов, баз данных,api и библиотек для дизайна</p><p><b>2022-2023 г.</b></p>
+        </div>
+        <div class="project">
+            <h3>Методист-маркетолог ЦМО НГТУ НЭТИ</h3>
+            <p> Создание и продвижение соц.сетей центра, разработка дизайна и рекламных компаний, работа напрямую с родителями и учениками, проведение
+                опросов с обратной связью, рассылка объявлений об отмене занятий, приглашение на курсы, контроль посещаемости, приведение в порядок документов и данных  </p><p><b>2023-2024 г.</b></p>
+        </div>
+        <div class="project">
+            <h3>Репетитор по математике для учеников 1-9 классов</h3>
+            <p> Разбор школьной программы, подробное объяснение как базовой математики, так и олимпиадных задач с повышенным уровнем сложности </p><p><b>с 2024 года</b></p>
+        </div>
+        
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://t.me/Code_Snake" target="_blank">
+                <img src="https://gji.nso.ru/sites/gji.nso.ru/wodby_files/files/imce/telegram_logo.png" alt="Telegram" class="social-icon">
+            </a>
+            <a href="https://vk.com/anastasia2604" target="_blank">
+                <img src="https://static.tildacdn.com/tild6537-3437-4431-a564-313761616336/vk-ts1623650785.png" alt="ВКонтакте" class="social-icon">
+            </a>
+            <a href="https://github.com/Code-Snake" target="_blank">
+                <img src="https://yandex-images.clstorage.net/56Zr1hx28/95559a1IFzL/3VAogNKiSAH63yjV8WObjZOd1ZNFMz03YgkW49XMltrIgzq3nqT7_s-3SRphobyUhaGcRxUG5bJC9LwRtabIGslAfJEFM4gAv83qRvfgn4jAmoVVwaU-OuzWCv8axg9RFBwnZYqzLP6d8JhK-69sxhKuWBcCXzluH_y1W-t5H8xTVuFF3HLPQXKJ5BO07pDHDBrXXpO5LnujXcQ6lICJmZ1d5GKEsun6WyIfxPktd4WTaRYfQJxyp91-9Vaqf9-M2JzkCdM8joh7BW_ce-TTikWcnh6WM2s5K5KKf1NJQdhclCwtxrAgu1YvXw3_YHaJmiKV1QiStG9VsDuf73oZxt1TLEfd-E1Lss0nX3kgkY4OnBjdnrVrdKeVAf7fBYdYVNtqY4Ry5jYXb5hLd2E9TB4rFVNJ2vwiU7y5G-a41U8Y1CvCGnkAATsIJhkyaR_Kw9xVGxtzYXTp3wk51MBOmBGcImuGsOC_V2gfjPWgOIaTrNlWxVJ07NOx9lijdZ7Cm11pDdL0AoQ3DafZ-ijQh8MTVxba9y98oheGcd1NgpiQmmlgA7EpfF8lVU2-pXpOFCwfE4vUsWvatPFeb7nVwx2Z4EeUd43Mts1uV37jV8pL1FUf3T_oeyFfgz_VxgYVFBpvpsC5pj5aYd2EcON3AFAs1pjMHHLhHHD1miC72E2ZU2PE1bAGzPhNZVu_YJ_GyRzamBW64reo385z04iJmp5WJ2DOPKD3lWfXhHGk8UsTplVZi17wZVI3-p7qeZdNEBElBtx5jUryTuXd9GgaCcjT1V3dcCu-qlOA-9yAQ5oXkq-nAPmkdRElEQs063qB0CpREARa_SUdPfNeqvHdB9jX5IlXP4rJv0ckn7cn0koDXxEW3D1ndapVhv3YjQlVE9Qhocc05XJXotdGdip1Qxblnp0KmfHh0rF_Hyw5WIXRV2WMGvROQzMPLVm-rBYBxhIX05K84zbqXQp-EY" alt="GitHub" class="social-icon">
+            </a>
+        </div>
+        <p>&copy; 2024 Комарова Анастасия. Все права защищены.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
